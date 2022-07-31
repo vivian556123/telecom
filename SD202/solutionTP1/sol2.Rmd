@@ -1,0 +1,57 @@
+---
+title: "Solution de l'exercice de visualisation de données"
+author: "Telecom ParisTech - MDI220"
+date: "Septembre 2016"
+output: html_document
+---
+
+## Vitesse de la lumière
+
+
+1,2. 
+
+```{r}
+m=morley
+plot(m[c(1,3)])
+```
+
+3. 
+
+```{r}
+v = matrix(m[,3],ncol = 5)
+boxplot(v,xlab="Expérience",ylab="Résultat")
+```
+
+
+## Réchauffement climatique
+
+1. 
+
+```{r}
+t <- read.csv("./temperature.csv")
+```
+
+2. 
+
+```{r}
+plot(t[c(1,2)],type="l",main="Evolution de la température de la planète",ylab="Ecart (C°)")
+plot(t[c(1,3)],type="l",main="Evolution de la température de la planète",ylab="Ecart (C°)",col="blue")
+lines(t[c(1,4)],type="l",col="red")
+legend("topleft",legend = c("Hémisphère Nord", "Hémisphère Sud"),lty=1,col=c("blue","red"))
+```
+
+3. Tracer sur le même graphique les histogrammes de la température annuelle de la planète sur les périodes 1880-1950, 1951-1980 et 1981-2015.
+
+```{r}
+p1=subset(t,Year<=1950)
+p1=data.matrix(p1)
+hist(p1[,2],xlab="Ecart (C°)",probability=TRUE,main="Distribution",xlim=range(-1:1),ylim=range(0:5),col="blue")
+p2=subset(t,Year>1950&Year<=1980)
+p2=data.matrix(p2)
+hist(p2[,2],add=TRUE,probability=TRUE,col="green")
+p3=subset(t,Year>1980)
+p3=data.matrix(p3)
+hist(p3[,2],add=TRUE,probability=TRUE,col="red")
+legend("topleft",legend = c("1880-1950","1951-1980","1981-2015"),lty=1,lwd=10,col=c("blue","green","red"))
+```
+

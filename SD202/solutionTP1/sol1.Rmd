@@ -1,0 +1,85 @@
+---
+title: "Exercice de simulation de variables aléatoires"
+author: "Telecom ParisTech - MDI220"
+date: "Septembre 2016"
+output: html_document
+---
+
+
+## Loi des grands nombres
+
+1,2,3. Loi uniforme
+
+```{r}
+n=100
+a=2
+b=6
+mu=.5*(a+b)
+X=runif(n,a,b)
+S=cumsum(X)
+Y=S/(1:n)
+plot(Y,type="l",xlab="k",ylab="Moyenne empirique",ylim=c(a,b))
+abline(mu,0, col="red")
+X=runif(n,a,b)
+S=cumsum(X)
+Y=S/(1:n)
+lines(Y,type="l",col="blue")
+```
+
+4. Loi exponentielle
+
+
+```{r}
+n=100
+mu=2.
+X=rexp(n,1/mu)
+S=cumsum(X)
+Y=S/(1:n)
+plot(Y,type="l",xlab="n",ylab="Moyenne empirique",ylim=c(0,5))
+abline(mu,0, col="red")
+X=rexp(n,1/mu)
+S=cumsum(X)
+Y=S/(1:n)
+lines(Y,type="l",col="blue")
+```
+
+
+## Théoreme central limite
+
+1,2. Loi uniforme
+
+```{r}
+a=2
+b=6
+mu=.5*(a+b)
+n=100
+k=1000
+Z=0
+for (j in 1:k) {
+  X=runif(n,a,b)
+  Z[j]=sum(X)/n
+}
+hist(Z,probability=TRUE,breaks=50,main="Distribution de la moyenne empirique",xlab="Valeur",ylab="Densité")
+variance=(b-a)*(b-a)/12
+NX = seq(min(Z),max(Z),length.out=500)  
+NY = dnorm(NX, mean = mu, sd=sqrt(variance/n)) 
+lines(x=NX,y=NY,col="red")
+```
+
+3. Loi exponentielle
+
+```{r}
+mu=2.
+n=100
+k=1000
+Z=0
+for (j in 1:k) {
+  X=rexp(n,1./mu)
+  Z[j]=sum(X)/n
+}
+hist(Z,probability=TRUE,breaks=50,main="Distribution de la moyenne empirique",xlab="Valeur",ylab="Densité")
+variance=mu*mu
+NX = seq(min(Z),max(Z),length.out=500)  
+NY = dnorm(NX, mean = mu, sd=sqrt(variance/n)) 
+lines(x=NX,y=NY,col="red")
+```
